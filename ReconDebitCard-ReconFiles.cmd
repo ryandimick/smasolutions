@@ -21,7 +21,6 @@ REM #   3 - Parameter 3 is missing                     #
 REM #   4 - Parameter 4 is missing                     #
 REM #   5 - Parameter 5 is missing                     #
 REM #   6 - No files found                             #
-REM ####################################################
 
 set exitCode=0
 
