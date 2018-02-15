@@ -1317,6 +1317,156 @@ catch
 }
 
 
+function Post-OpConJobAction 
+
+{
+param(
+        [Parameter(Mandatory = $false,Position = 0,HelpMessage = 'Name of the property',ValueFromPipeline = $true)]
+        [ValidateNotNullorEmpty()]
+        [String]$Action,  
+        [Parameter(Mandatory = $false,Position = 0,HelpMessage = 'Value to set the property equal to',ValueFromPipeline = $true)]
+        [ValidateNotNullorEmpty()]
+        [Object]$Jobs,
+        [Parameter(Mandatory = $false,Position = 0,HelpMessage = 'Value to set the property equal to',ValueFromPipeline = $true)]
+        [ValidateNotNullorEmpty()]
+        [String]$Reason,  
+        [Parameter(Mandatory = $false,Position = 0,HelpMessage = 'Value to set the property equal to',ValueFromPipeline = $true)]
+        [ValidateNotNullorEmpty()]
+        [object]$jobAction  
+        ##[string]$ApiUrl = $Global:OpconRESTApiUrl,
+        ##[string]$ApiToken = $Global:OpconRESTApiToken
+        )
+
+        
+    
+
+    # add Category
+    $jobAction = @{
+	    
+        action = $Action
+        jobs = @( @{ id = 0 })
+        reason = $Reason 
+   }
+      $Uri = ($Global:OpconRESTApiUrl + "/api/jobactions")
+	try
+	{
+        $jobAction = Invoke-RestMethod -Method Post -Uri $Uri -Headers $Global:OpconRESTApiAuthHeader -Body (ConvertTo-Json $jobAction) -ContentType "application/json"
+	}
+	catch
+	{
+        Write-Host ("Unable to post job action " + $Action)
+        Write-Host ("StatusCode: " + $_.Exception.Response.StatusCode.value__)
+	    Write-Host ("StatusDescription: " + $_.Exception.Response.StatusDescription)
+        ##exit $_.Exception.Response.StatusCode.value__
+	}
+    Write-Host ("Job Action " + $jobAction + " created.")
+    
+        return $jobAction
+            
+}
+Function Hold-OpConJob
+
+{
+
+
+$action = "hold"
+$result = Post-OpConJobAction -action $action -jobs $jobs -reason $reason
+return $result
+
+
+}
+
+Function Release-OpConJob 
+
+{
+
+$action = "release"
+$result = Post-OpConJobAction -action $action -jobs $jobs -reason $reason
+return $result
+
+}
+
+Function Cancel-OpConJob 
+
+{
+
+$action = "cancel"
+$result = Post-OpConJobAction -action $action -jobs $jobs -reason $reason
+return $result
+
+}
+
+Function Skip-OpConJob 
+
+{
+
+$action = "skip"
+$result = Post-OpConJobAction -action $action -jobs $jobs -reason $reason
+return $result
+
+}
+
+Function Kill-OpConJob 
+
+{
+
+$action = "kill"
+$result = Post-OpConJobAction -action $action -jobs $jobs -reason $reason
+return $result
+
+}
+
+Function Start-OpConJob 
+
+{
+
+$action = "start"
+$result = Post-OpConJobAction -action $action -jobs $jobs -reason $reason
+return $result
+
+}
+
+Function ForceRestart-OpConJob 
+
+{
+
+$action = "forceRestart"
+$result = Post-OpConJobAction -action $action -jobs $jobs -reason $reason
+return $result
+
+}
+
+Function RestartOnHold-OpConJob 
+
+{
+
+$action = "restartOnHold"
+$result = Post-OpConJobAction -action $action -jobs $jobs -reason $reason
+return $result
+
+}
+
+Function MarkFinishedOK-OpConJob 
+
+{
+
+$action = "markFinishedOK"
+$result = Post-OpConJobAction -action $action -jobs $jobs -reason $reason
+return $result
+
+}
+
+Function MarkFailed-OpConJob 
+
+{
+
+$action = "markFailed"
+$result = Post-OpConJobAction -action $action -jobs $jobs -reason $reason
+return $result
+
+}
+
+
 Export-ModuleMember -Function Get-Token ##this should be removed, just doing for testing
 Export-ModuleMember -Function Login-OpConApi
 Export-ModuleMember -Function Set-OpConGlobalProperty
@@ -1344,6 +1494,17 @@ Export-ModuleMember -Function Get-OpConUserList
 Export-ModuleMember -Function Get-OpConUser
 Export-ModuleMember -Function Get-OpConBatchUserList
 Export-ModuleMember -Function Get-OpConBatchUser
+Export-ModuleMember -Function Hold-OpConJob
+Export-ModuleMember -Function Release-OpConJob
+Export-ModuleMember -Function Hold-OpConJob
+Export-ModuleMember -Function Cancel-OpConJob
+Export-ModuleMember -Function Skip-OpConJob
+Export-ModuleMember -Function Kill-OpConJob
+Export-ModuleMember -Function Start-OpConJob
+Export-ModuleMember -Function ForceRestart-OpConJob
+Export-ModuleMember -Function RestartOnHold-OpConJob
+Export-ModuleMember -Function MarkFinishedOK-OpConJob
+Export-ModuleMember -Function MarkFailed-OpConJob
 
 
 
