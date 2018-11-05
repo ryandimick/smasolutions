@@ -1,4 +1,5 @@
-﻿function Ignore-SelfSignedCerts {
+﻿# Test Comment
+function Ignore-SelfSignedCerts {
     add-type -TypeDefinition  @"
         using System.Net;
         using System.Security.Cryptography.X509Certificates;
